@@ -1,0 +1,10 @@
+{
+  "name": "TrustLens",
+  "short_name": "TrustLens",
+  "description": "Analyse suspicious messages for scams and fraud.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#406aff",
+  "icons": []
+}

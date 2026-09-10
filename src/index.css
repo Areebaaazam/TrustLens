@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --color-manila: #e7dcb8;
+  --color-manila-2: #ddcea0;
+  --color-paper: #f7f4ec;
+  --color-ink: #241e14;
+  --color-ink-soft: #4d4636;
+  --color-line: #c9bd98;
+  --color-navy-deep: #152238;
+  --color-navy-deep-2: #1c2e4a;
+  --color-alert: #b53a2a;
+  --color-alert-bg: #f4ded9;
+  --color-caution: #93611b;
+  --color-caution-bg: #f2e6c9;
+  --color-verified: #3b6b45;
+  --color-verified-bg: #dfe9dd;
+
+  --font-serif: "Fraunces", Georgia, "Noto Naskh Arabic", serif;
+  --font-sans: "Inter", "system-ui", -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Menlo", monospace;
+}
+
+html { font-size: 16px; }
+body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+
+[lang="ar"] body, [dir="rtl"] body {
+  font-family: "Noto Naskh Arabic", "Tahoma", var(--font-serif);
+}
+
+@media (min-width: 1024px) {
+  .tl-container { max-width: 820px; }
+  .tl-hero h1 { font-size: clamp(2.4rem, 3.2vw, 3.2rem) !important; }
+  .tl-hero p { font-size: 1.1rem !important; }
+  .tl-card { padding: 2rem 2rem !important; }
+  .tl-section { margin-top: 5rem !important; }
+  .tl-section-gap { gap: 2.5rem !important; }
+  .tl-footer { margin-top: 5rem !important; }
+  .tl-result-pad { padding: 2rem 2.5rem !important; }
+  .tl-verdict-text { font-size: 3.5rem !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
