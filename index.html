@@ -17,6 +17,12 @@
       if ("launchQueue" in window) {
         window.launchQueue.setConsumer(() => {})
       }
+      window.__deferredPrompt = null;
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        window.__deferredPrompt = e;
+        window.dispatchEvent(new CustomEvent("install-ready"));
+      });
     </script>
   </body>
 </html>

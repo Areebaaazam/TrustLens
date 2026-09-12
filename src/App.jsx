@@ -37,6 +37,7 @@ function App() {
   const [copied, setCopied] = useState(false)
   const [confirmExample, setConfirmExample] = useState(null)
   const [lang, setLang] = useState("en")
+  const [installPrompt, setInstallPrompt] = useState(null)
   const textareaRef = useRef(null)
   const resultRef = useRef(null)
   const skipLinkRef = useRef(null)
@@ -46,6 +47,20 @@ function App() {
   const t = (o) => (typeof o === "object" ? (o[lang] || o.en || "") : o)
 
   useEffect(() => { document.documentElement.dir = lang === "ar" ? "rtl" : "ltr"; document.documentElement.lang = lang }, [lang])
+
+  useEffect(() => {
+    const handler = () => setInstallPrompt(window.__deferredPrompt)
+    window.addEventListener("install-ready", handler)
+    if (window.__deferredPrompt) setInstallPrompt(window.__deferredPrompt)
+    return () => window.removeEventListener("install-ready", handler)
+  }, [])
+
+  const handleInstall = async () => {
+    if (!installPrompt) return
+    installPrompt.prompt()
+    const res = await installPrompt.userChoice
+    if (res.outcome === "accepted") setInstallPrompt(null)
+  }
 
   useEffect(() => {
     if (!isAnalyzing) return
@@ -162,7 +177,14 @@ function App() {
             </svg>
             <span className="font-serif font-semibold text-xl tracking-tight text-[var(--color-ink)]">TrustLens</span>
           </div>
-          <button onClick={() => setLang(lang === "en" ? "ar" : "en")} className="px-2.5 py-1 text-xs font-medium bg-[var(--color-manila)] hover:bg-[var(--color-manila-2)] text-[var(--color-ink-soft)] rounded transition-colors cursor-pointer" aria-label={t({ en: "Switch to Arabic", ar: "التبديل إلى الإنجليزية" })}>{lang === "en" ? "AR" : "EN"}</button>
+          <div className="flex items-center gap-2">
+            {installPrompt && (
+              <button onClick={handleInstall} className="px-2.5 py-1 text-xs font-mono font-semibold bg-[var(--color-navy-deep)] text-[var(--color-paper)] hover:opacity-90 rounded transition-opacity cursor-pointer">
+                {t({ en: "Download app", ar: "تنزيل التطبيق" })}
+              </button>
+            )}
+            <button onClick={() => setLang(lang === "en" ? "ar" : "en")} className="px-2.5 py-1 text-xs font-medium bg-[var(--color-manila)] hover:bg-[var(--color-manila-2)] text-[var(--color-ink-soft)] rounded transition-colors cursor-pointer" aria-label={t({ en: "Switch to Arabic", ar: "التبديل إلى الإنجليزية" })}>{lang === "en" ? "AR" : "EN"}</button>
+          </div>
         </header>
 
         <div className="relative">
